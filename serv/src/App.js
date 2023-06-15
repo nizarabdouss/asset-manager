@@ -3,8 +3,8 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
-/*
 import Team from "./scenes/team";
+/*
 import Invoices from "./scenes/invoices";
 import Contacts from "./scenes/contacts";
 import Bar from "./scenes/bar";
@@ -32,8 +32,9 @@ function App() {
             <Topbar setIsSidebar={setIsSidebar}/>
             <Routes>
               <Route exact path="/" element={<Dashboard />}/>
-              {/*
+              
               <Route exact path="/team" element={<Team />}/>
+              {/*
               <Route exact path="/contacts" element={<Contacts />}/>
               <Route exact path="/invoices" element={<Invoices />}/>
               <Route exact path="/form" element={<Form />}/>
