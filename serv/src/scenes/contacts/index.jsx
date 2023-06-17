@@ -1,33 +1,27 @@
 import {Box, Typography, useTheme} from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataAssets } from "../../data/mockData2";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+import { mockDataAssetContacts } from "../../data/mockData2";
 import Header from "../../components/Header";
 
 
-const Team = () => {
+const Contacts = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
     const columns = [
-        { field: "id", headerName: "ID" },
-        { field: "name", headerName: "Asset Name", flex: 1, cellClassName: "name-column--cell" },
-        { field: "category", headerName: "Category", flex: 1 },
-        { field: "purchaseDate", headerName: "Purchase Date", flex: 1 },
-        { field: "purchasePrice", headerName: "Purchase Price", flex: 1 },
-        { field: "currentValue", headerName: "Current Value", flex: 1 },
-        { field: "lastMaintenance", headerName: "Last Maintenance", flex: 1 },
-        { field: "insuranceProvider", headerName: "Insurance Provider", flex: 1 },
-        { field: "policyExpiry", headerName: "Policy Expiry", flex: 1 },
-      ];
+        { field: "id", headerName: "ID", flex: 0.5 },
+        { field: "assetName", headerName: "Asset Name", flex: 1 },
+        { field: "dealerEmail", headerName: "Dealer Email", flex: 1 },
+        { field: "purchaseLocation", headerName: "Purchase Location", flex: 1 },
+        { field: "appraisalContact", headerName: "Appraisal Contact", flex: 1 },
+        { field: "maintenanceContact", headerName: "Maintenance Contact", flex: 1 }
+    ];
       
 
     return(
         <Box m="20px">
-            <Header title="ASSETS" subtitle="Manage my assets"/>
+            <Header title="TEAM" subtitle="Managing the Team Members"/>
             <Box
                 m="40px 0 0 0" height="75vh" sx={{
                     "& .MuiDataGrid-root":{
@@ -50,15 +44,19 @@ const Team = () => {
                         borderTop: "none",
                         backgroundColor: colors.blueAccent[700]
                     },
+                    "& .MuiDataGrid-toolbarContainer .MuiButton-text":{
+                        color: `${colors.grey[100]} !important`,
+                    },
                 }}
             >
                 <DataGrid
-                    rows={mockDataAssets}
+                    rows={mockDataAssetContacts}
                     columns={columns}
+                    components={{ Toolbar: GridToolbar}}
                 />
             </Box>
         </Box>
     )
 }
 
-export default Team;
+export default Contacts;

@@ -7,9 +7,8 @@ import { Link } from 'react-router-dom';
 
 import {tokens} from '../../theme';
 
-
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
+import InventoryIcon from '@mui/icons-material/Inventory';
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
@@ -20,7 +19,8 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
-
+import {signOut} from "firebase/auth";
+import {auth} from "../../config/firebase";
 import logo from "../../images/logo192.png";
 
 const Item = ({title, to, icon, selected, setSelected}) => {
@@ -42,6 +42,14 @@ const Sidebar = () => {
     const colors = tokens(theme.palette.mode);
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [selected, setSelected] = useState("Dashboard");
+
+    const logOut = async ()  => {
+      try{
+          await signOut(auth);
+      } catch (err) {
+          console.error(err);
+      }
+  }
   
     return (
       <Box
@@ -114,6 +122,7 @@ const Sidebar = () => {
                   <Typography variant="h5" color={colors.greenAccent[500]}>
                     VP Fancy Admin
                   </Typography>
+                  <button onClick={logOut}>Log out</button>
                 </Box>
               </Box>
             )}
@@ -135,9 +144,9 @@ const Sidebar = () => {
                 Data
               </Typography>
               <Item
-                title="Manage Team"
+                title="Manage Assets"
                 to="/team"
-                icon={<PeopleOutlinedIcon />}
+                icon={<InventoryIcon />}
                 selected={selected}
                 setSelected={setSelected}
               />
