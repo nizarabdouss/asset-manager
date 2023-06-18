@@ -13,13 +13,14 @@ import Pie from "./scenes/pie";
 import Line from "./scenes/line";
 import Auth from "./scenes/auth";
 import {auth} from "./config/firebase";
-
+import Geography from "./scenes/geography";
+import SignUp from "./scenes/signup";
 
 /*
 import Form from "./scenes/form";
 
 import FAQ from "./scenes/faq";
-import Geography from "./scenes/geography";
+
 */
 import Calendar from "./scenes/calendar";
 
@@ -61,12 +62,16 @@ const App = ()  => {
                     <Route exact path="/pie" element={<Pie />}/>
                     <Route exact path="/line" element={<Line />}/>
                     <Route exact path="/calendar" element={<Calendar />}/>
+                    <Route exact path="/geography" element={<Geography />}/>
                   </Routes>
                 </main>
               </>
             ) : (
               <>
-                <Auth/>
+                <Routes>
+                  <Route exact path="/" element={<Auth />}/>
+                  <Route exact path="/signup" element={<SignUp />}/>
+                </Routes>
               </>
             )
           }

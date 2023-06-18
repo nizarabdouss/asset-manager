@@ -11,7 +11,7 @@ import {Link} from "react-router-dom";
 
 
 
-const Auth = () => {
+const SignUp = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     //const [email, setEmail] = useState("");
     //const [password, setPassword] = useState("");
@@ -49,7 +49,7 @@ const Auth = () => {
     }
     return (
         <Box className="content" m="20px">
-            <Header title="Login" subtitle="login to your account with one of the following providers"/>
+            <Header title="Sign Up" subtitle="Create an account or sign up with a provider"/>
             <Formik
                 onSubmit={(values, { setSubmitting }) => {
                     signIn(values.email, values.password);
@@ -117,7 +117,7 @@ const Auth = () => {
                             Sign in with google
                         </Button>
 
-                        <Link to="/signup">
+                        <Link to="/">
                             Sign in with google
                         </Link>
             </Box>
@@ -148,4 +148,4 @@ const initialValues = {
 };
 
 
-export default Auth;
+export default SignUp;
