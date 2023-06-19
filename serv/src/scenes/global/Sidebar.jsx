@@ -20,8 +20,9 @@ import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import {signOut} from "firebase/auth";
-import {auth} from "../../config/firebase";
+import {auth, db} from "../../config/firebase";
 import logo from "../../images/logo192.png";
+import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 
 const Item = ({title, to, icon, selected, setSelected}) => {
     const theme = useTheme();
@@ -42,6 +43,21 @@ const Sidebar = () => {
     const colors = tokens(theme.palette.mode);
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [selected, setSelected] = useState("Dashboard");
+    const [fullName, setFullName] = useState("");
+
+    const docRef = doc(db, "users", auth?.currentUser?.uid);
+    
+    getDoc(docRef).then(docSnap => {
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+        setFullName(docSnap.data().name);
+      } else {
+        console.log("No such document!");
+      }
+    })
+     
+    
+    
 
     const logOut = async ()  => {
       try{
@@ -49,7 +65,7 @@ const Sidebar = () => {
       } catch (err) {
           console.error(err);
       }
-  }
+    }
   
     return (
       <Box
@@ -117,7 +133,8 @@ const Sidebar = () => {
                     fontWeight="bold"
                     sx={{ m: "10px 0 0 0" }}
                   >
-                    {auth?.currentUser?.displayName}
+                    
+                    {fullName}
                   </Typography>
                   <Typography variant="h5" color={colors.greenAccent[500]}>
                     VP Fancy Admin

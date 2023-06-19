@@ -1,4 +1,4 @@
-import { auth, googleProvider } from "../../config/firebase";
+import { auth, googleProvider, db } from "../../config/firebase";
 import {createUserWithEmailAndPassword, signInWithRedirect, signOut} from 'firebase/auth';
 import {useState} from "react";
 import {Box, Button, TextField} from "@mui/material";
@@ -9,6 +9,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import {Link} from "react-router-dom";
 
+import { doc, setDoc } from "firebase/firestore";
 
 
 const SignUp = () => {
@@ -19,13 +20,23 @@ const SignUp = () => {
     console.log(auth?.currentUser);
 
 
-    const handleChange = (to) => {
-        
-    }
-    const signIn = async (email, password) => {
+    const setDocs = async (name) => {
+        try{
+            await setDoc(doc(db, "users", auth?.currentUser?.uid), { 
+                name: name,
+                assets: "{}", 
+                contacts: " "
+
+            });
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    const signIn = async (email, password,name) => {
         try{
             console.log("Attempt");
             await createUserWithEmailAndPassword(auth, email, password);
+            setDocs(name);
             console.log("Pass");
         } catch (err) {
             console.error(err);
@@ -52,7 +63,7 @@ const SignUp = () => {
             <Header title="Sign Up" subtitle="Create an account or sign up with a provider"/>
             <Formik
                 onSubmit={(values, { setSubmitting }) => {
-                    signIn(values.email, values.password);
+                    signIn(values.email, values.password, values.fullName);
                     setSubmitting(false);
                 }}
                 initialValues={initialValues}
@@ -103,10 +114,25 @@ const SignUp = () => {
                             helperText={touched.password && errors.password}
                             sx={{ gridColumn: "span 4" }}
                         />
+
+                        <TextField
+                            fullWidth
+                            variant="filled"
+                            type="text"
+                            label="Full Name"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.fullName}
+                            name="fullName"
+                            error={!!touched.fullName && !!errors.fullName}
+                            helperText={touched.fullName && errors.fullName}
+                            sx={{ gridColumn: "span 4" }}
+                        />
+
                     </Box>
                     <Box display="flex" justifyContent="end" mt="20px">
                         <Button type="submit" color="secondary" variant="contained">
-                            Login
+                            Sign Up
                         </Button>
                     </Box>
                 </form>
@@ -139,6 +165,7 @@ const SignUp = () => {
 const checkoutSchema = yup.object().shape({
     email: yup.string().email("invalid email").required("required"),
     password: yup.string().required("required"),
+    fullName: yup.string().required("required"),
 });
 
 const initialValues = {

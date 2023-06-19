@@ -1,5 +1,5 @@
 import { auth, googleProvider } from "../../config/firebase";
-import {createUserWithEmailAndPassword, signInWithRedirect, signOut} from 'firebase/auth';
+import {signInWithEmailAndPassword, signInWithRedirect, signOut} from 'firebase/auth';
 import {useState} from "react";
 import {Box, Button, TextField} from "@mui/material";
 
@@ -25,7 +25,7 @@ const Auth = () => {
     const signIn = async (email, password) => {
         try{
             console.log("Attempt");
-            await createUserWithEmailAndPassword(auth, email, password);
+            await signInWithEmailAndPassword(auth, email, password);
             console.log("Pass");
         } catch (err) {
             console.error(err);
