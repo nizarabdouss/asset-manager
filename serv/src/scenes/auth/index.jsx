@@ -8,6 +8,7 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import {Link} from "react-router-dom";
+import {FcGoogle} from "react-icons/fc";
 
 
 
@@ -112,14 +113,23 @@ const Auth = () => {
                 </form>
                 )}
             </Formik>
-            <Box display="flex" justifyContent="end" mt="20px">
+            <Box display="flex" justifyContent="center" mt="20px">
+                    
                         <Button onClick={signInWithGoogle} color="secondary" variant="contained">
-                            Sign in with google
-                        </Button>
+                            <Box px="10px" mt="3px">
+                                <FcGoogle/>
+                            </Box>
+                            Sign In with google
+                        </Button> 
 
-                        <Link to="/signup">
-                            Sign in with google
-                        </Link>
+                        
+            </Box>
+
+            <Box display="flex" justifyContent="center" mt="20px">
+                Don't have an account, 
+                    <Link to="/signup">
+                         Sign Up!
+                    </Link>
             </Box>
             {/*
         <div>

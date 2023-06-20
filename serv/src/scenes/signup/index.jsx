@@ -2,6 +2,7 @@ import { auth, googleProvider, db } from "../../config/firebase";
 import {createUserWithEmailAndPassword, signInWithRedirect, signOut} from 'firebase/auth';
 import {useState} from "react";
 import {Box, Button, TextField} from "@mui/material";
+import {FcGoogle} from "react-icons/fc";
 
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -16,8 +17,11 @@ const SignUp = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     //const [email, setEmail] = useState("");
     //const [password, setPassword] = useState("");
+    const [fullName, setFullName] = useState("");
+
     console.log(auth?.currentUser?.photoURL);
     console.log(auth?.currentUser);
+    
 
 
     const setDocs = async (name) => {
@@ -43,9 +47,10 @@ const SignUp = () => {
         }
     };
 
-    const signInWithGoogle = async () => {
+    const signInWithGoogle = async (name) => {
         try{
             await signInWithRedirect(auth, googleProvider);
+            setDocs(auth?.currentUser?.displayName);
         } catch (err) {
             console.error(err);
         }
@@ -138,14 +143,21 @@ const SignUp = () => {
                 </form>
                 )}
             </Formik>
-            <Box display="flex" justifyContent="end" mt="20px">
+            <Box display="flex" justifyContent="center" mt="20px">
+                        
                         <Button onClick={signInWithGoogle} color="secondary" variant="contained">
-                            Sign in with google
-                        </Button>
+                            <Box px="10px" mt="3px">
+                                <FcGoogle/>
+                            </Box>
+                            Sign Up with google
+                        </Button>          
+            </Box>
 
-                        <Link to="/">
-                            Sign in with google
-                        </Link>
+            <Box display="flex" justifyContent="center" mt="20px">
+                Already have an account?
+                    <Link to="/">
+                         Log in
+                    </Link>
             </Box>
             {/*
         <div>
@@ -171,6 +183,7 @@ const checkoutSchema = yup.object().shape({
 const initialValues = {
     email: "",
     password: "",
+    fullName: "",
     
 };
 
